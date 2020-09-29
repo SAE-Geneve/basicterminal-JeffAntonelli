@@ -1,34 +1,106 @@
-#include <string>
 #include <iostream>
+#include "tile.h"
+#include "command.h"
+
+void show_help() 
+{
+	std::cout << "Valid options:\n";
+	std::cout << "\t[q]uit  -> quit the game.\n";
+	std::cout << "\t[n]orth -> move north.\n";
+	std::cout << "\t[s]outh -> move south.\n"; // fill up the rest!
+	std::cout << "\t[e]ast -> move east.\n";// See the list of command in the tile.h.
+	std::cout << "\t[w]est -> move west.\n";
+	std::cout << "\t[a]attack -> attack enemy.\n";
+}
+
+void show_state() 
+{
+	Player player = get_player();
+	std::cout << "Maze :\n";
+	std::cout <<(char)get_tile_at_position(player.x -1, player.y -1);// complete me!
+	std::cout <<(char)get_tile_at_position(player.x , player.y - 1);
+	std::cout << (char)get_tile_at_position(player.x +1, player.y - 1);
+	std::cout <<"\n";
+	std::cout <<(char)get_tile_at_position(player.x -1, player.y);
+	std::cout << "p";
+	std::cout <<(char)get_tile_at_position(player.x +1, player.y);
+	std::cout << "\n";
+	std::cout << (char)get_tile_at_position(player.x -1, player.y + 1);
+	std::cout << (char)get_tile_at_position(player.x , player.y +1);
+	std::cout << (char)get_tile_at_position(player.x +1, player.y +1);
+	std::cout << "\n";
+	// You can either show the whole maze or just a portion of it.(vous pouvez afficher le labyrinth en entier ou juste une partie)
+	std::cout << "Player(" << player.x << ", " << player.y << ") :\n";
+	// TODO complete me!
+	std:: // Now check if there is an enemy within range.(maintenant verifier si il y a un ennemi à portée)
+	// for each enemy within range: (pour chaque ennemi à portée)
+	// show enemy description. (afficher la description de l ennemi)
+}
+
+CommandType get_command() 
+{
+	std::cout << "] ";
+	std::string command_str;
+	std::getline(std::cin, command_str);
+	switch (command_str[0])
+	{
+		case 'q':
+			return CommandType::QUIT;
+		case 'n':
+			return CommandType::NORTH;
+		case 's':
+			return CommandType::SOUTH;
+		case 'e':
+			return CommandType::EAST;
+		case 'w':
+			return CommandType::WEST;
+		case 'a':
+			return CommandType::ATTACK;
+		case 'h':
+		default:
+			show_help();
+			return CommandType::HELP;
+	}
+}
 
 int main()
 {
-	/*const int value = 3 ;
-	std::string apple_count =
-		std::to_string(value) +
-		"apples";
-	std::cout
-		<< "you have "
-		<<  apple_count;
-
-	std::string txt = "apple_count";
-	std::cout
-		<< " size: "
-		<< std::to_string(txt.length());*/
-
-	/*std::string txt = "here is something";
-	char value = txt[6];
-		std::cout
-		<< "The character is ["
-		<< value
-		<< "]\n";*/
-	std::cout << "Enter your first name:";
-	//std::string first_name;
-		//std::cin >> first_name;
-		//std::cout << first_name; //pour afficher le nom
-	std::string name;
-	std::getline(std::cin, name);
-	std::cout <<name;
+	std::cout << "Welcome in the Maze!\n";
+	show_help();
+	while (true)
+	{
+		show_state();
+		CommandType command_type = get_command();
+		switch (command_type) 
+		{
+			case CommandType::QUIT:
+				std::cout << "bye!\n";
+				return 0;
+			case CommandType::NORTH:
+				north();
+				tick();
+				break;
+			case CommandType::SOUTH:
+				south();
+				tick();
+				break;
+			case CommandType::EAST:
+				east();
+				tick();
+				break;
+			case CommandType::WEST:
+				west();
+				tick();
+				break;
+			case CommandType::ATTACK:
+				attack();
+				tick();
+				break;
+			case CommandType::HELP:
+			default:
+				tick();
+				break;
+		}
+	}
 	return 0;
 }
-
