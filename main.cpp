@@ -16,28 +16,51 @@ void show_help()
 void show_state() 
 {
 	Player player = get_player();
+	Enemy enemy;
 	std::cout << "Maze :\n";
-	std::cout <<(char)get_tile_at_position(player.x -1, player.y -1);// complete me!
-	std::cout <<(char)get_tile_at_position(player.x , player.y - 1);
-	std::cout << (char)get_tile_at_position(player.x +1, player.y - 1);
+	std::cout << (char)get_tile_at_position(player.x -1, player.y -1);// complete me! (diagonale)
+	std::cout << (char)get_tile_at_position(player.x , player.y - 1);
+	std::cout << (char)get_tile_at_position(player.x +1, player.y - 1);//(diagonale)
 	std::cout <<"\n";
-	std::cout <<(char)get_tile_at_position(player.x -1, player.y);
+	std::cout << (char)get_tile_at_position(player.x -1, player.y);
 	std::cout << "p";
-	std::cout <<(char)get_tile_at_position(player.x +1, player.y);
+	std::cout << (char)get_tile_at_position(player.x +1, player.y);
 	std::cout << "\n";
-	std::cout << (char)get_tile_at_position(player.x -1, player.y + 1);
+	std::cout << (char)get_tile_at_position(player.x -1, player.y + 1);//(diagonale)
 	std::cout << (char)get_tile_at_position(player.x , player.y +1);
-	std::cout << (char)get_tile_at_position(player.x +1, player.y +1);
+	std::cout << (char)get_tile_at_position(player.x +1, player.y +1);//(diagonale)
 	std::cout << "\n";
 	// You can either show the whole maze or just a portion of it.(vous pouvez afficher le labyrinth en entier ou juste une partie)
 	std::cout << "Player(" << player.x << ", " << player.y << ") :\n";
-	// TODO complete me!
-	std:: // Now check if there is an enemy within range.(maintenant verifier si il y a un ennemi à portée)
-	// for each enemy within range: (pour chaque ennemi à portée)
-	// show enemy description. (afficher la description de l ennemi)
+	std::cout 
+		<< "You are "
+		<< player.name
+	<< "\n";
+	std::cout
+		<< "Your life ="
+		<< player.health_points 
+	<< "\n";
+	
+	{if (get_tile_at_position(get_player().x + 1, get_player().y) == TileType::ENEMY)
+		std::cout << "You are at attack range of " << enemy.name
+		<< "\n" << "ATK:" << enemy.attack << " DEF:" << enemy.defence << "\n"; 
+	
+    else if (get_tile_at_position(get_player().x - 1, get_player().y) == TileType::ENEMY)// Now check if there is an enemy within range.(maintenant verifier si il y a un ennemi à portée)
+	    std::cout << "You are at attack range of " << enemy.name                         // 
+		<< "\n" << "ATK:" << enemy.attack << " DEF:" << enemy.defence << "\n";           //
+
+	else if (get_tile_at_position(get_player().x, get_player().y + 1) == TileType::ENEMY)
+		std::cout << "You are at attack range of " << enemy.name
+		<< "\n" << "ATK:" << enemy.attack << " DEF:" << enemy.defence << "\n";
+
+	else if (get_tile_at_position(get_player().x, get_player().y - 1) == TileType::ENEMY)
+		std::cout << "You are at attack range of " << enemy.name
+		<< "\n" << "ATK:"  << enemy.attack << " DEF:" << enemy.defence <<"\n";
+	}
+    
 }
 
-CommandType get_command() 
+	CommandType get_command()
 {
 	std::cout << "] ";
 	std::string command_str;

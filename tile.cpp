@@ -54,7 +54,7 @@ void set_enemy(Enemy enemy, int x, int y)
 
 Enemy get_enemy(int x, int y)
 {
-	Enemy enemy;
+	Enemy enemy = local_enemy[{x, y}];
 	enemy.x = x;
 	enemy.y = y;
 	// TODO complete me!
